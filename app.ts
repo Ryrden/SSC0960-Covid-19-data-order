@@ -53,5 +53,21 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 	if (error) {
 		console.error(error);
 	}
-	console.log("Result", result);
+	result.shift() //removing header result array
+	let threeBiggerConfirmedOnList: CovidData[] = result
+											.filter((a) => a.confirmed > 0 )
+											.sort((a,b) =>  a.confirmed - b.confirmed)
+											.slice(0,3);
+	//console.log(threeBiggerConfirmedOnList) -> Não funciona corretamente, corrigir. (Erro: "a.confirmed" e "b.confirmed" retorna Undefinied)
+
+	let sumOfDeaths = 0;
+	result
+		.sort((a,b) => a.active - b.active)
+		.slice(0,10).sort((a,b) => b.confirmed - a.confirmed)
+		.slice(0,5)
+		.forEach((curr) => sumOfDeaths += curr.deaths)
+
+	console.log(sumOfDeaths);
+
+
 });
