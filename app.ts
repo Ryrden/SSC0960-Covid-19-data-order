@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import {parse} from "csv-parse";
+import { CovidData } from "./covidData";
 
 /* 
 1- Os três países com os maiores valores de "Confirmed". Os nomes devem estar em ordem alfabética.
@@ -10,6 +11,7 @@ import {parse} from "csv-parse";
 5- A soma de "Active" de todos os países em que "Confirmed" é maior o igual que 1.000.000.
 */
 
+<<<<<<< HEAD
 type CovidData = {
 	FIPS: string;
 	Admin2: string;
@@ -26,6 +28,8 @@ type CovidData = {
 	incidenceRate: string;
 	casefatalityRate: string;
 };
+=======
+>>>>>>> c8f919b0ef4cd3f29cd792041ba25a8261a58a74
 //FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,
 //Long_,Confirmed,Deaths,Recovered,Active,Combined_Key,Incident_Rate,Case_Fatality_Ratio
 const csvFilePath = path.resolve(__dirname, "./01-01-2021.csv");
@@ -69,7 +73,9 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 		.sort((a,b) => a.active - b.active)
 		.slice(0,10).sort((a,b) => b.Confirmed - a.Confirmed)
 		.slice(0,5)
-		.forEach((curr) => sumOfDeaths += curr.deaths)
+		.forEach((curr) => sumOfDeaths += curr.Deaths)
 
-	console.log(sumOfDeaths);
+	//console.log(sumOfDeaths);
+
+
 });
