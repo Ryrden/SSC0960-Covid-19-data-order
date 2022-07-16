@@ -41,10 +41,7 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 	}
 	result.shift() //removing header result array
 
-<<<<<<< HEAD
 	/*----- Q1 -----*/
-=======
->>>>>>> eccd2207c81b7e75fc7733d3d46f9888cde10e6f
 	let threeBiggerConfirmedOnList: String[] = result
 											.sort((a,b) =>  b.Confirmed - a.Confirmed)
 											.slice(0,3)
@@ -52,18 +49,11 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 
 	/*----- Q2 -----*/
 	let sumOfDeaths: Number = result
-<<<<<<< HEAD
-							.sort((a,b) => a.Active - b.Active)
-							.slice(0,10).sort((a,b) => b.Confirmed - a.Confirmed)
-							.slice(0,5)
-							.reduce((acc,curr) => +acc + +curr.Deaths,0)
-=======
 						.sort((a,b) => b.Active - a.Active)
 						.slice(0,10)
 						.sort((a,b) => a.Confirmed - b.Confirmed)
 						.slice(0,5)
 						.reduce((acc,curr) => +acc + +curr.Deaths,0)
->>>>>>> eccd2207c81b7e75fc7733d3d46f9888cde10e6f
 
 	/*----- Q3 -----*/
 	let HigherSouthHemisphereDeaths = result
