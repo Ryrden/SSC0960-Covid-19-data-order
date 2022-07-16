@@ -41,9 +41,10 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 	}
 	result.shift() //removing header result array
 
-	let threeBiggerConfirmedOnList: CovidData[] = result
+	let threeBiggerConfirmedOnList: String[] = result
 											.sort((a,b) =>  b.Confirmed - a.Confirmed)
 											.slice(0,3)
+											.map(item => item.Country_Region);
 
 	let sumOfDeaths: Number = result
 				.sort((a,b) => a.Active - b.Active)
@@ -55,7 +56,7 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 	
 	let HigherNorthHemisphereDeaths = result.filter((data) => data.Lat > 0).sort((a,b) => b.Deaths - a.Deaths).slice(0,1);
 	
-	let ActiveSumWhereConfirmedCountrysIsBiggerThan1000000: number = result.reduce((acc,curr) => {
+	let ActiveSumWhereConfirmedCountrysIsBiggerThan1000000: Number = result.reduce((acc,curr) => {
 		if (curr.Confirmed >= 1_000_000)
 		return +acc + +curr.Active
 		return +acc;
