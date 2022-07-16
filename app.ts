@@ -18,7 +18,7 @@ type CovidData = {
 	lastUpdate: string;
 	lat: string;
 	long: string;
-	confirmed: number;
+	Confirmed: number;
 	deaths: number;
 	recovered: number;
 	active: number;
@@ -50,24 +50,26 @@ const headers = [
 const fileContent = fs.readFileSync(csvFilePath, {encoding: "utf-8"});
 
 parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData[]) => {
+	
 	if (error) {
 		console.error(error);
 	}
-	result.shift() //removing header result array
+
+	result.shift() //removing header from the result array
+
+	//ordena em ordem decrescente (parametro 'Country_Region' já em ordem alfabética). 
 	let threeBiggerConfirmedOnList: CovidData[] = result
-											.filter((a) => a.confirmed > 0 )
-											.sort((a,b) =>  a.confirmed - b.confirmed)
+											.filter((a) => a.Confirmed > 0 )
+											.sort((a,b) =>  b.Confirmed - a.Confirmed)
 											.slice(0,3);
-	//console.log(threeBiggerConfirmedOnList) -> Não funciona corretamente, corrigir. (Erro: "a.confirmed" e "b.confirmed" retorna Undefinied)
+	console.log(threeBiggerConfirmedOnList);
 
 	let sumOfDeaths = 0;
 	result
 		.sort((a,b) => a.active - b.active)
-		.slice(0,10).sort((a,b) => b.confirmed - a.confirmed)
+		.slice(0,10).sort((a,b) => b.Confirmed - a.Confirmed)
 		.slice(0,5)
 		.forEach((curr) => sumOfDeaths += curr.deaths)
 
 	console.log(sumOfDeaths);
-
-
 });
