@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import {parse} from "csv-parse";
+import { CovidData } from "./covidData";
 
 /* 
 1- Os três países com os maiores valores de "Confirmed". Os nomes devem estar em ordem alfabética.
@@ -10,22 +11,6 @@ import {parse} from "csv-parse";
 5- A soma de "Active" de todos os países em que "Confirmed" é maior o igual que 1.000.000.
 */
 
-type CovidData = {
-	FIPS: string;
-	Admin2: string;
-	provinceState: string;
-	countryRegion: string;
-	lastUpdate: string;
-	lat: string;
-	long: string;
-	confirmed: number;
-	deaths: number;
-	recovered: number;
-	active: number;
-	combinedKey: string;
-	incidenceRate: string;
-	casefatalityRate: string;
-};
 //FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,
 //Long_,Confirmed,Deaths,Recovered,Active,Combined_Key,Incident_Rate,Case_Fatality_Ratio
 const csvFilePath = path.resolve(__dirname, "./01-01-2021.csv");
@@ -54,20 +39,20 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 		console.error(error);
 	}
 	result.shift() //removing header result array
+	console.log(result[0].Confirmed);
 	let threeBiggerConfirmedOnList: CovidData[] = result
-											.filter((a) => a.confirmed > 0 )
-											.sort((a,b) =>  a.confirmed - b.confirmed)
+											.filter((a) => a.Confirmed > 0 )
+											.sort((a,b) =>  a.Confirmed - b.Confirmed)
 											.slice(0,3);
-	//console.log(threeBiggerConfirmedOnList) -> Não funciona corretamente, corrigir. (Erro: "a.confirmed" e "b.confirmed" retorna Undefinied)
-
+	//console.log(threeBiggerConfirmedOnList) -> Não funciona corretamente, corrigir. (Erro: "a.Confirmed" e "b.Confirmed" retorna Undefinied)
 	let sumOfDeaths = 0;
 	result
-		.sort((a,b) => a.active - b.active)
-		.slice(0,10).sort((a,b) => b.confirmed - a.confirmed)
+		.sort((a,b) => a.Active - b.Active)
+		.slice(0,10).sort((a,b) => b.Confirmed - a.Confirmed)
 		.slice(0,5)
-		.forEach((curr) => sumOfDeaths += curr.deaths)
+		.forEach((curr) => sumOfDeaths += curr.Deaths)
 
-	console.log(sumOfDeaths);
+	//console.log(sumOfDeaths);
 
 
 });
