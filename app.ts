@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import {parse} from "csv-parse";
-import { CovidData } from "./covidData";
+//import { CovidData } from "./covidData";
 
 /* 
 1- Os três países com os maiores valores de "Confirmed". Os nomes devem estar em ordem alfabética.
@@ -22,7 +22,7 @@ type CovidData = {
 	Confirmed: number;
 	Deaths: number;
 	recovered: number;
-	active: number;
+	Active: number;
 	combinedKey: string;
 	incidenceRate: string;
 	casefatalityRate: string;
@@ -66,13 +66,24 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 	console.log(threeBiggerConfirmedOnList);
 
 	let sumOfDeaths = 0;
-	result
-		.sort((a,b) => a.active - b.active)
-		.slice(0,10).sort((a,b) => b.Confirmed - a.Confirmed)
+	let tenBiggerActiveOnList : CovidData[] = result.sort((a,b) => b.Active - a.Active).slice(0,10);
+	/*
+		.sort((a,b) => b.Confirmed - a.Confirmed)
 		.slice(0,5)
 		.forEach((curr) => sumOfDeaths += curr.Deaths)
+		*/
 
-	//console.log(sumOfDeaths);
 
+	//console.log("\n\n\n");
+	//console.log(tenBiggerActiveOnList);
 
+	let fiveSmallestConfirmedBetweenTenBiggerActivate : CovidData[] = tenBiggerActiveOnList
+	.sort((a,b) => a.Confirmed - b.Confirmed)
+	.slice(0,5);
+	//.forEach((curr) => sumOfDeaths += curr.Deaths);
+
+	console.log("\n\n\n");
+	console.log(fiveSmallestConfirmedBetweenTenBiggerActivate);
+
+	//console.log(sumOfDeaths);   ---> Aqui falta fazer o forEach funcionar, mas já está filtrado apropriadamente
 });
