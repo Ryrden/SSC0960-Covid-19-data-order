@@ -68,4 +68,28 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 	console.log("3-",HigherSouthHemisphereDeaths)
 	console.log("4-",HigherNorthHemisphereDeaths)
 	console.log("5-",ActiveSumWhereConfirmedCountrysIsBiggerThan1000000)
-})
+
+	/*
+	let sumOfDeaths = 0;
+	let tenBiggerActiveOnList : CovidData[] = result.sort((a,b) => b.Active - a.Active).slice(0,10);
+	/*
+		.sort((a,b) => b.Confirmed - a.Confirmed)
+		.slice(0,5)
+		.forEach((curr) => sumOfDeaths += curr.Deaths)
+		
+
+
+	//console.log("\n\n\n");
+	//console.log(tenBiggerActiveOnList);
+
+	let fiveSmallestConfirmedBetweenTenBiggerActivate : CovidData[] = tenBiggerActiveOnList
+	.sort((a,b) => a.Confirmed - b.Confirmed)
+	.slice(0,5);
+	//.forEach((curr) => sumOfDeaths += curr.Deaths);
+
+	console.log("\n\n\n");
+	console.log(fiveSmallestConfirmedBetweenTenBiggerActivate);
+
+	//console.log(sumOfDeaths);   ---> Aqui falta fazer o forEach funcionar, mas já está filtrado apropriadamente
+	*/
+});
