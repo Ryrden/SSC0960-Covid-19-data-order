@@ -20,7 +20,7 @@ type CovidData = {
 	lat: string;
 	long: string;
 	Confirmed: number;
-	deaths: number;
+	Deaths: number;
 	recovered: number;
 	active: number;
 	combinedKey: string;
