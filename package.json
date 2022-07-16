@@ -3,9 +3,10 @@
     "@types/node": "^18.0.0"
   },
   "dependencies": {
-    "csv-parse": "^5.2.2"
+    "csv-parse": "^5.2.2",
+    "typescript": "^4.7.4"
   },
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "app": "tsc app.ts && node app.js"
   }
