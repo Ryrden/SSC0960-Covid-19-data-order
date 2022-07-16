@@ -47,10 +47,11 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 											.map(item => item.Country_Region);
 
 	let sumOfDeaths: Number = result
-				.sort((a,b) => a.Active - b.Active)
-				.slice(0,10).sort((a,b) => b.Confirmed - a.Confirmed)
-				.slice(0,5)
-				.reduce((acc,curr) => +acc + +curr.Deaths,0)
+						.sort((a,b) => b.Active - a.Active)
+						.slice(0,10)
+						.sort((a,b) => a.Confirmed - b.Confirmed)
+						.slice(0,5)
+						.reduce((acc,curr) => +acc + +curr.Deaths,0)
 
 	let HigherSouthHemisphereDeaths = result.filter((data) => data.Lat < 0).sort((a,b) => b.Deaths - a.Deaths).slice(0,1);
 	
