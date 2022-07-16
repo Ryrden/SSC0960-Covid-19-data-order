@@ -7,6 +7,6 @@
   },
   "type": "module",
   "scripts": {
-    "run": "tsc app.ts && node app.js"
+    "app": "tsc app.ts && node app.js"
   }
 }
