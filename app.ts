@@ -56,19 +56,22 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 						.reduce((acc,curr) => +acc + +curr.Deaths,0)
 
 	/*----- Q3 -----*/
-	let HigherSouthHemisphereDeaths = result
+	let HigherSouthHemisphereDeaths: Number[] = result
 									.filter((data) => data.Lat < 0)
 									.sort((a,b) => b.Deaths - a.Deaths)
 									.slice(0,1)
 									.map(a => a.Deaths);
 	
-	let HigherNorthHemisphereDeaths = result.filter((data) => data.Lat > 0).sort((a,b) => b.Deaths - a.Deaths).slice(0,1);
+	/*----- Q4 -----*/
+	let HigherNorthHemisphereDeaths  = result
+								.filter((data) => data.Lat > 0)
+								.sort((a,b) => b.Deaths - a.Deaths)
+								.slice(0,1);
 	
-	let ActiveSumWhereConfirmedCountrysIsBiggerThan1000000: Number = result.reduce((acc,curr) => {
-		if (curr.Confirmed >= 1_000_000)
-		return +acc + +curr.Active
-		return +acc;
-	},0)
+	/*----- Q5 -----*/
+	let ActiveSumWhereConfirmedCountrysIsBiggerThan1000000: Number = result
+															.filter((data) => data.Confirmed > 1_000_000)
+															.reduce((acc,curr) => +acc + +curr.Active,0)
 	
 	
 	
@@ -77,28 +80,4 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 	console.log("3-",HigherSouthHemisphereDeaths)
 	console.log("4-",HigherNorthHemisphereDeaths)
 	console.log("5-",ActiveSumWhereConfirmedCountrysIsBiggerThan1000000)
-
-	/*
-	let sumOfDeaths = 0;
-	let tenBiggerActiveOnList : CovidData[] = result.sort((a,b) => b.Active - a.Active).slice(0,10);
-	/*
-		.sort((a,b) => b.Confirmed - a.Confirmed)
-		.slice(0,5)
-		.forEach((curr) => sumOfDeaths += curr.Deaths)
-		
-
-
-	//console.log("\n\n\n");
-	//console.log(tenBiggerActiveOnList);
-
-	let fiveSmallestConfirmedBetweenTenBiggerActivate : CovidData[] = tenBiggerActiveOnList
-	.sort((a,b) => a.Confirmed - b.Confirmed)
-	.slice(0,5);
-	//.forEach((curr) => sumOfDeaths += curr.Deaths);
-
-	console.log("\n\n\n");
-	console.log(fiveSmallestConfirmedBetweenTenBiggerActivate);
-
-	//console.log(sumOfDeaths);   ---> Aqui falta fazer o forEach funcionar, mas já está filtrado apropriadamente
-	*/
 });
