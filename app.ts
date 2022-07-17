@@ -56,7 +56,7 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 						.reduce((acc,curr) => +acc + +curr.Deaths,0)
 
 	/*----- Q3 -----*/
-	let HigherSouthHemisphereDeaths: Number[] = result
+	let HigherSouthHemisphereDeaths = result
 									.filter((data) => data.Lat < 0)
 									.sort((a,b) => b.Deaths - a.Deaths)
 									.slice(0,1)
@@ -69,16 +69,15 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 									.slice(0,1)
 									.map(a => a.Deaths);
 	
-	/*----- Q5 -----*/
+	/*----- Q5 -----*/								
 	let ActiveSumWhereConfirmedCountrysIsBiggerThan1000000: Number = result
-															.filter((data) => data.Confirmed > 1_000_000)
-															.reduce((acc,curr) => +acc + +curr.Active,0)
+																	.filter((a) => a.Confirmed >= 1000000)
+																	.reduce((acc,curr) => +acc + +curr.Active,0);
 	
 	
-	
-	console.log("1-",threeBiggerConfirmedOnList)
+	console.log("1-",threeBiggerConfirmedOnList);
 	console.log("2-",sumOfDeaths);
-	console.log("3-",HigherSouthHemisphereDeaths)
-	console.log("4-",HigherNorthHemisphereDeaths)
-	console.log("5-",ActiveSumWhereConfirmedCountrysIsBiggerThan1000000)
+	console.log("3-",HigherSouthHemisphereDeaths);
+	console.log("4-",HigherNorthHemisphereDeaths);
+	console.log("5-",ActiveSumWhereConfirmedCountrysIsBiggerThan1000000);
 });
