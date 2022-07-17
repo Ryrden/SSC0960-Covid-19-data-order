@@ -63,10 +63,11 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 									.map(a => a.Deaths);
 	
 	/*----- Q4 -----*/
-	let HigherNorthHemisphereDeaths  = result
-								.filter((data) => data.Lat > 0)
-								.sort((a,b) => b.Deaths - a.Deaths)
-								.slice(0,1);
+	let HigherNorthHemisphereDeaths = result
+									.filter((data) => data.Lat > 0)
+									.sort((a,b) => b.Deaths - a.Deaths)
+									.slice(0,1)
+									.map(a => a.Deaths);
 	
 	/*----- Q5 -----*/
 	let ActiveSumWhereConfirmedCountrysIsBiggerThan1000000: Number = result
