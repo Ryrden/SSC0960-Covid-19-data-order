@@ -62,7 +62,12 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 									.slice(0,1)
 									.map(a => a.Deaths);
 	
-	let HigherNorthHemisphereDeaths = result.filter((data) => data.Lat > 0).sort((a,b) => b.Deaths - a.Deaths).slice(0,1);
+	/*----- Q4 -----*/
+	let HigherNorthHemisphereDeaths = result
+									.filter((data) => data.Lat > 0)
+									.sort((a,b) => b.Deaths - a.Deaths)
+									.slice(0,1)
+									.map(a => a.Deaths);
 	
 	let ActiveSumWhereConfirmedCountrysIsBiggerThan1000000: Number = result.reduce((acc,curr) => {
 		if (curr.Confirmed >= 1_000_000)
