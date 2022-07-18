@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import {parse} from "csv-parse";
+import { parse } from "csv-parse";
 import { CovidData } from "./covidData";
 
 /* 
@@ -11,9 +11,9 @@ import { CovidData } from "./covidData";
 5- A soma de "Active" de todos os países em que "Confirmed" é maior ou igual que 1.000.000.
 */
 
-//FIPS,Admin2,Province_State,Country_Region,Last_Update,Lat,
-//Long_,Confirmed,Deaths,Recovered,Active,Combined_Key,Incident_Rate,Case_Fatality_Ratio
-const csvFilePath = path.resolve(__dirname, "./01-01-2021.csv");
+
+const csvFilename = process.argv[2];
+const csvFilePath = path.resolve(__dirname, csvFilename);
 
 const headers = [
 	"FIPS",
@@ -35,7 +35,6 @@ const headers = [
 const fileContent = fs.readFileSync(csvFilePath, {encoding: "utf-8"});
 
 parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData[]) => {
-	
 	if (error) {
 		console.error(error);
 	}
@@ -46,7 +45,7 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 												.sort((a,b) =>  b.Confirmed - a.Confirmed)
 												.slice(0,3)
 												.map(item => item.Country_Region);
-
+	
 	/*----- Q2 -----*/
 	let sumOfDeaths: Number = result
 								.sort((a,b) => b.Active - a.Active)
@@ -74,10 +73,9 @@ parse(fileContent, {delimiter: ",", columns: headers}, (error, result: CovidData
 																	.filter((a) => a.Confirmed >= 1000000)
 																	.reduce((acc,curr) => +acc + +curr.Active,0);
 	
-	
-	console.log("1-",threeBiggerConfirmedOnList);
-	console.log("2-",sumOfDeaths);
-	console.log("3-",HigherSouthHemisphereDeaths);
-	console.log("4-",HigherNorthHemisphereDeaths);
-	console.log("5-",ActiveSumWhereConfirmedCountrysIsBiggerThan1000000);
+	console.log("Q1- " + threeBiggerConfirmedOnList); //Usando "+" para converter o array em string separado por ","
+	console.log("Q2- " + sumOfDeaths);
+	console.log("Q3- " + HigherSouthHemisphereDeaths);
+	console.log("Q4- " + HigherNorthHemisphereDeaths);
+	console.log("Q5- " + ActiveSumWhereConfirmedCountrysIsBiggerThan1000000);
 });
