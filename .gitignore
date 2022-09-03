@@ -1,0 +1,7 @@
+## NodeJs archives ##
+node_modules
+.env
+package-lock.json
+
+## TypeScript Transpilation ##
+*.js
